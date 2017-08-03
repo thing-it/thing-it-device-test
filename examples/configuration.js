@@ -7,8 +7,18 @@ module.exports = {
         id: "testDevice1",
         plugin: "test/testDevice",
         configuration: {},
-        actors: [],
-        sensors: []
+        actors: [{
+            id: "testActor1",
+            label: "Test Actor 1",
+            type: "testActor",
+            configuration: {}
+        }],
+        sensors: [{
+            id: "testSensor1",
+            label: "Test Sensor 1",
+            type: "testSensor",
+            configuration: {}
+        }]
     }],
     groups: [],
     services: [],

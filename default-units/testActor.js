@@ -73,27 +73,13 @@ function TestActor() {
      *
      */
     TestActor.prototype.setState = function (state) {
-        this.state.light = state.light;
-
-        if (this.TestActor) {
-            if (this.state.light === "blink") {
-                this.TestActor.blink();
-            } else if (this.state.light === "on") {
-                this.TestActor.on();
-            } else {
-                this.TestActor.stop().off();
-            }
-        }
+        this.state = state;
     };
 
     /**
      *
      */
     TestActor.prototype.on = function () {
-        if (this.TestActor) {
-            this.TestActor.on();
-        }
-
         this.state.light = "on";
 
         this.publishStateChange();
@@ -103,10 +89,6 @@ function TestActor() {
      *
      */
     TestActor.prototype.off = function () {
-        if (this.TestActor) {
-            this.TestActor.stop().off();
-        }
-
         this.state.light = "off";
 
         this.publishStateChange();
@@ -118,16 +100,8 @@ function TestActor() {
     TestActor.prototype.toggle = function () {
         if (this.state.light == "off") {
             this.state.light = "on";
-
-            if (this.TestActor) {
-                this.TestActor.on();
-            }
         } else {
             this.state.light = "off";
-
-            if (this.TestActor) {
-                this.TestActor.stop().off();
-            }
         }
 
         this.publishStateChange();
@@ -137,10 +111,6 @@ function TestActor() {
      *
      */
     TestActor.prototype.blink = function () {
-        if (this.TestActor) {
-            this.TestActor.blink();
-        }
-
         this.state.light = "blink";
 
         this.publishStateChange();

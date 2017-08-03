@@ -8,13 +8,17 @@ describe('[thing-it] Device Test', function () {
         testDriver = require("thing-it-test").createTestDriver({logLevel: "debug"});
 
         testDriver.registerDevicePlugin('test', __dirname + "/../testDevice");
+        testDriver.registerUnitPlugin(__dirname + "/../default-units/testActor");
+        testDriver.registerUnitPlugin(__dirname + "/../default-units/testSensor");
     });
     describe('Basic Test', function () {
         this.timeout(10000);
 
         it('should complete without error', function (done) {
             setTimeout(function () {
-                console.log('Devices', testDeviceModule.devices[0].label);
+                console.log('Device', testDeviceModule.getDevice('testDevice1').label);
+                console.log('Actor', testDeviceModule.getActor('testDevice1', 'testActor1').label);
+                console.log('Sensor', testDeviceModule.getSensor('testDevice1', 'testSensor1').label);
 
                 done();
             }.bind(this), 5000);
@@ -25,15 +29,32 @@ describe('[thing-it] Device Test', function () {
                 simulated: false
             });
         });
-
-        it('should produce Device values', function (done) {
+        it('should trigger Device State Change Notification', function (done) {
             testDriver.addListener({
                 publishDeviceStateChange: function (event) {
                     console.log(event);
                     done();
                 }
             });
-            testDeviceModule.devices[0].setState({integerField: 10, stringField: 'Test'});
+            testDeviceModule.getDevice('testDevice1').setState({integerField: 10, stringField: 'Test'});
+        });
+        it('should trigger Actor State Change Notification', function (done) {
+            testDriver.addListener({
+                publishActorStateChange: function (event) {
+                    console.log(event);
+                    done();
+                }
+            });
+            testDeviceModule.getActor('testDevice1', 'testActor1').on();
+        });
+        it('should trigger Sensor Event Publishing', function (done) {
+            testDriver.addListener({
+                publishEvent: function (event) {
+                    console.log(event);
+                    done();
+                }
+            });
+            testDeviceModule.getSensor('testDevice1', 'testSensor1').publishEvent('click', {});
         });
     });
 });

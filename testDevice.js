@@ -25,13 +25,23 @@ var singleton = {
         return new TestDevice();
     },
     getDevice: function (id) {
-        return _.find();
+        return this.devices.find(function (element) {
+            return element.id === id;
+        });
     },
     getActor: function (deviceId, id) {
-        return _.find();
+        var device = this.getDevice(deviceId);
+
+        return device.actors.find(function (element) {
+            return element.id === id;
+        });
     },
     getSensor: function (deviceId, id) {
-        return _.find();
+        var device = this.getDevice(deviceId);
+
+        return device.sensors.find(function (element) {
+            return element.id === id;
+        });
     }
 };
 
