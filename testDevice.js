@@ -1,4 +1,5 @@
 var singleton = {
+    prefix: '',
     devices: [],
     actors: [],
     sensors: [],
@@ -24,9 +25,12 @@ var singleton = {
     create: function (device) {
         return new TestDevice();
     },
+    setPrefix: function (prefix) {
+        this.prefix = prefix;
+    },
     getDevice: function (id) {
         return this.devices.find(function (element) {
-            return element.id === id;
+            return element.id === this.prefix + id;
         });
     },
     getActor: function (deviceId, id) {

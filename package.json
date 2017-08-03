@@ -1,6 +1,6 @@
 {
   "name": "thing-it-device-test",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "[thing-it-node] Device Plugin for testing.",
   "authors": "Marc Gille",
   "license": "MIT, EPL",
@@ -9,6 +9,7 @@
     "thing-it",
     "Digitalization"
   ],
+  "main": "./testDevice.js",
   "dependencies": {
     "lodash": "^4.17.4",
     "q": "^1.5.0"
