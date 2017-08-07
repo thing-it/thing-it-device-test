@@ -31,7 +31,7 @@ var singleton = {
     getDevice: function (id) {
         return this.devices.find(function (element) {
             return element.id === this.prefix + id;
-        });
+        }.bind(this));
     },
     getActor: function (deviceId, id) {
         var device = this.getDevice(deviceId);
