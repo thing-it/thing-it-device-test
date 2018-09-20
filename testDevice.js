@@ -7,20 +7,13 @@ var singleton = {
         family: "testDevice",
         plugin: "testDevice",
         label: "Test Device",
+        tangible: false,
         connectionTypes: [],
         dataTypes: {},
         actorTypes: [],
         sensorTypes: [],
         services: [],
-        configuration: [{
-            label: "Board Type",
-            id: "boardType",
-            type: {
-                family: "reference",
-                id: "boardType"
-            },
-            defaultValue: "RASPBERRY"
-        }]
+        configuration: []
     },
     create: function (device) {
         return new TestDevice();

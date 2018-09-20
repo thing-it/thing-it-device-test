@@ -5,6 +5,11 @@ module.exports = {
         role: "actor",
         family: "testActor",
         deviceTypes: ["test/testDevice"],
+        tangible: false,
+        events: [{
+            id: "manualGeneratedEvent",
+            label: "Manual generated Event"
+        }],
         services: [{
             id: "on",
             label: "On"
@@ -14,6 +19,9 @@ module.exports = {
         }, {
             id: "blink",
             label: "Blink"
+        },{
+            id: "generateEvent",
+            label: "Generate Event"
         }],
         state: [{
             id: "light",
@@ -22,15 +30,7 @@ module.exports = {
                 id: "string"
             }
         }],
-        configuration: [{
-            label: "Pin",
-            id: "pin",
-            type: {
-                family: "reference",
-                id: "digitalInOutPin"
-            },
-            defaultValue: "12"
-        }]
+        configuration: []
     },
     create: function () {
         return new TestActor();
@@ -105,7 +105,7 @@ function TestActor() {
         }
 
         this.publishStateChange();
-    }
+    };
 
     /**
      *
@@ -114,5 +114,11 @@ function TestActor() {
         this.state.light = "blink";
 
         this.publishStateChange();
+    };
+    /**
+     *
+     */
+    TestActor.prototype.generateEvent = function () {
+       this.publishEvent("manualGeneratedEvent");
     }
-};
+}
