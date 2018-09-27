@@ -6,6 +6,14 @@ module.exports = {
         family: "testSensor",
         deviceTypes: ["test/testDevice"],
         tangible: false,
+        events: [{
+            id: "manualGeneratedEvent",
+            label: "Manual generated Event"
+        }],
+        services: [{
+            id: "generateEvent",
+            label: "Generate Event"
+        }],
         configuration: []
     },
     create: function () {
@@ -25,4 +33,11 @@ function TestSensor() {
 
         this.device.registerSensor(this);
     };
+
+    /**
+     *
+     */
+    TestSensor.prototype.generateEvent = function () {
+        this.publishEvent("manualGeneratedEvent");
+    }
 };
