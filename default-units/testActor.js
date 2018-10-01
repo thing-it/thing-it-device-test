@@ -17,9 +17,12 @@ module.exports = {
             id: "off",
             label: "Off"
         }, {
+            id: "toggle",
+            label: "Toggle"
+        }, {
             id: "blink",
             label: "Blink"
-        },{
+        }, {
             id: "generateEvent",
             label: "Generate Event"
         }],
@@ -119,6 +122,6 @@ function TestActor() {
      *
      */
     TestActor.prototype.generateEvent = function () {
-       this.publishEvent("manualGeneratedEvent");
+        this.publishEvent("manualGeneratedEvent");
     }
 }
