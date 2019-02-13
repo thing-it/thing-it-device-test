@@ -14,7 +14,10 @@ module.exports = {
             id: "generateEvent",
             label: "Generate Event"
         }],
-        configuration: []
+        configuration: [{
+            id: 'submitRate',
+            label: 'Submit Rate in ms'
+        }]
     },
     create: function () {
         return new TestSensor();
@@ -32,6 +35,11 @@ function TestSensor() {
         // Register with Device
 
         this.device.registerSensor(this);
+
+        setInterval(function () {
+            this.publishStateChange({temperature: 15 + Math.ceil(Math.random() * 10)});
+
+        }.bind(this), this.configuration && this.configuration.submitRate ? this.configuration.submitRate : 10000);
     };
 
     /**

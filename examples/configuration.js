@@ -17,7 +17,7 @@ module.exports = {
             id: "testSensor1",
             label: "Test Sensor 1",
             type: "testSensor",
-            configuration: {}
+            configuration: {submitRate: 100}
         }]
     }],
     groups: [],
