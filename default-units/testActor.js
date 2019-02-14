@@ -33,7 +33,10 @@ module.exports = {
                 id: "string"
             }
         }],
-        configuration: []
+        configuration: [{
+            id: 'operationalStateInterval',
+            label: 'Operational State Interval (ms)'
+        }]
     },
     create: function () {
         return new TestActor();
@@ -59,6 +62,20 @@ function TestActor() {
         this.state = {
             light: "off"
         };
+
+        this.operationalState.status = 'OK';
+
+        setInterval(function() {
+            if (this.operationalState.status === 'OK') {
+                this.operationalState = {status: "ERROR", message: "Network connection lost"};
+            } else if (this.operationalState.status === 'ERROR') {
+                this.operationalState = {status: "PENDING", message: "Reconnecting"};
+            } else if (this.operationalState.status === 'PENDING') {
+                this.operationalState = {status: "OK", message: "Normal"};
+            }
+
+            this.publishOperationalStateChange();
+        }.bind(this), this.configuration && this.configuration.operationalStateInterval ? this.configuration.operationalStateInterval : 30);
 
         deferred.resolve();
 
