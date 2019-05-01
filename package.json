@@ -1,5 +1,5 @@
 {
-  "name": "thing-it-device-test",
+  "name": "@thing-it/device-test",
   "version": "0.0.11",
   "description": "[thing-it-node] Device Plugin for testing.",
   "authors": "Marc Gille",
@@ -10,6 +10,9 @@
     "Digitalization"
   ],
   "main": "./testDevice.js",
+  "scripts": {
+    "postversion": "git push && git push --tags && npm publish"
+  },
   "dependencies": {
     "lodash": "^4.17.4",
     "q": "^1.5.0"
