@@ -1,6 +1,6 @@
 {
   "name": "@thing-it/device-test",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "[thing-it-node] Device Plugin for testing.",
   "authors": "Marc Gille",
   "license": "MIT, EPL",
