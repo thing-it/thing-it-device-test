@@ -65,4 +65,11 @@ function TestSensor() {
     TestSensor.prototype.generateEvent = function () {
         this.publishEvent("manualGeneratedEvent");
     }
+
+    /**
+     *
+     */
+    TestSensor.prototype.getState = function () {
+        return this.state;
+    }
 };
