@@ -35,7 +35,10 @@ module.exports = {
         }],
         configuration: [{
             id: 'operationalStateInterval',
-            label: 'Operational State Interval (ms)'
+            label: 'Operational State Interval (ms)',
+            type: {
+                id: 'integer'
+            }
         }]
     },
     create: function () {
@@ -75,7 +78,7 @@ function TestActor() {
             }
 
             this.publishOperationalStateChange();
-        }.bind(this), this.configuration && this.configuration.operationalStateInterval ? this.configuration.operationalStateInterval : 30);
+        }.bind(this), this.configuration && this.configuration.operationalStateInterval ? this.configuration.operationalStateInterval : 30 * 1000);
 
         deferred.resolve();
 

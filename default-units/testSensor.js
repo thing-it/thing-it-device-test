@@ -16,10 +16,16 @@ module.exports = {
         }],
         configuration: [{
             id: 'submitRate',
-            label: 'Submit Rate (ms)'
+            label: 'Submit Rate (ms)',
+            type: {
+                id: 'integer'
+            }
         }, {
             id: 'operationalStateInterval',
-            label: 'Operational State Interval (ms)'
+            label: 'Operational State Interval (ms)',
+            type: {
+                id: 'integer'
+            }
         }]
     },
     create: function () {
@@ -56,7 +62,7 @@ function TestSensor() {
             }
 
             this.publishOperationalStateChange();
-        }.bind(this), this.configuration && this.configuration.operationalStateInterval ? this.configuration.operationalStateInterval : 30);
+        }.bind(this), this.configuration && this.configuration.operationalStateInterval ? this.configuration.operationalStateInterval : 30 * 1000);
     };
 
     /**
