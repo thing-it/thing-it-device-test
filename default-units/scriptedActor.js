@@ -215,7 +215,7 @@ ScriptedActor.prototype.loadScript = function(scriptText) {
 
 module.exports = {
     metadata: {
-        plugin: "testActorScripted",
+        plugin: "scriptedActor",
         label: "Test Actor (Scripted)",
         role: "actor",
         family: "scriptedActor",
