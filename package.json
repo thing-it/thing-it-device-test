@@ -14,10 +14,13 @@
     "postversion": "git push && git push --tags && npm publish"
   },
   "dependencies": {
+    "cron": "^1.7.1",
     "lodash": "^4.17.4",
-    "q": "^1.5.0"
+    "q": "^1.5.0",
+    "require-from-string": "^2.0.2"
   },
   "devDependencies": {
+    "@types/cron": "^1.7.1",
     "thing-it-test": "0.0.18"
   }
 }

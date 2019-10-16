@@ -1,0 +1,7 @@
+<div class="flexLayout flexAlignCenter padding1" style="width: 100%;">
+    <button mat-button (click)="panel.callActorService(component, 'startExecution', {})">Start</button>
+    <button class="marginLeft1" mat-button (click)="panel.callActorService(component, 'stopExecution', {})">Stop</button>
+    <button class="marginLeft1" mat-button (click)="panel.callActorService(component, 'toggleExecution', {})">Toggle</button>
+    <button class="marginLeft1" mat-button (click)="panel.callActorService(component, 'generateEvent', {})">Event</button>
+
+</div>
