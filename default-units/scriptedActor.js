@@ -114,9 +114,12 @@ ScriptedActor.prototype.startExecution = function() {
             const script = this.loadScript(this.configuration.script);
             this.jobContext = {
                 host: this,
-                logDebug: this.logDebug,
-                logInfo: this.logInfo,
-                logError: this.logError,
+                hostDevice: this.device,
+                publishSyntheticActorEvent: this.publishSyntheticActorEvent.bind(this),
+                publishSyntheticActorStateChange: this.publishSyntheticActorStateChange.bind(this),
+                logDebug: this.logDebug.bind(this),
+                logInfo: this.logInfo.bind(this),
+                logError: this.logError.bind(this),
             };
             this.scriptJob = cron.job(this.configuration.scriptSchedule, () => {
                 try {
@@ -189,6 +192,27 @@ ScriptedActor.prototype.toggleExecution = function() {
  */
 ScriptedActor.prototype.generateEvent = function() {
     this.publishEvent("manualGeneratedEvent");
+}
+
+/**
+ * @param {string} componentId
+ * @param {string} eventId
+ * @param {{[key: string]: any}} [payload]
+ */
+ScriptedActor.prototype.publishSyntheticActorEvent = function (componentId, eventId, payload) {
+    const deviceId = this.device.node.__nodeManager.unmangleId(this.device.id);
+    this.logInfo(`About to publish synthetic event {thingId: '${deviceId}/${componentId}', metricName: 'eventId', valueStr: '${eventId}', ...} ...`);
+    this.device.node.publishActorEvent(this.device, {id: componentId}, eventId, payload || {});    
+}
+
+/**
+ * @param {string} componentId
+ * @param {{[key: string]: any}} state
+ */
+ScriptedActor.prototype.publishSyntheticActorStateChange = function (componentId, state) {
+    const deviceId = this.device.node.__nodeManager.unmangleId(this.device.id);
+    this.logInfo(`About to publish synthetic state change {thingId: '${deviceId}/${componentId}', state: '${JSON.stringify(state)}', ...} ...`);
+    this.device.node.publishActorStateChange(this.device, {id: componentId}, state);    
 }
 
 /**
@@ -265,5 +289,14 @@ module.exports = {
 };
 
 /**
- * @typedef {{host: ScriptedActor, logDebug: (msg: string, ...args) => void, logInfo: (msg: string, ...args) => void, logError: (msg: string, ...args) => void, [key: string]: any}} JobContext
+ * @typedef {{
+ *  host: ScriptedActor,
+ *  hostDevice: any,
+ *  publishSyntheticActorEvent: (componentId: string, eventId: string, payload?: {[key: string]: any}) => void,
+ *  publishSyntheticActorStateChange: (componentId: string, state: {[key: string]: any}) => void,
+ *  logDebug: (msg: string, ...args) => void,
+ *  logInfo: (msg: string, ...args) => void,
+ *  logError: (msg: string, ...args) => void,
+ *  [key: string]: any
+ * }} JobContext
  */
