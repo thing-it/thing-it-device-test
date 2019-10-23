@@ -33,6 +33,8 @@ module.exports = {
     }
 };
 
+const q = require('q');
+
 /**
  *
  */
@@ -45,14 +47,14 @@ function TestSensor() {
 
         this.device.registerSensor(this);
 
-        setInterval(function () {
+        setInterval(() => {
             this.publishStateChange({temperature: 15 + Math.ceil(Math.random() * 10)});
 
-        }.bind(this), this.configuration && this.configuration.submitRate ? this.configuration.submitRate : 10000);
+        }, this.configuration && this.configuration.submitRate ? this.configuration.submitRate : 10000);
 
         this.operationalState.status = 'OK';
 
-        setInterval(function () {
+        setInterval(() => {
             if (this.operationalState.status === 'OK') {
                 this.operationalState = {status: "ERROR", message: "Network connection lost"};
             } else if (this.operationalState.status === 'ERROR') {
@@ -62,7 +64,9 @@ function TestSensor() {
             }
 
             this.publishOperationalStateChange();
-        }.bind(this), this.configuration && this.configuration.operationalStateInterval ? this.configuration.operationalStateInterval : 30 * 1000);
+        }, this.configuration && this.configuration.operationalStateInterval ? this.configuration.operationalStateInterval : 30 * 1000);
+
+        return q.resolve();
     };
 
     /**

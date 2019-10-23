@@ -46,7 +46,7 @@ module.exports = {
     }
 };
 
-var q = require('q');
+const q = require('q');
 
 /**
  *
@@ -56,8 +56,6 @@ function TestActor() {
      *
      */
     TestActor.prototype.start = function () {
-        var deferred = q.defer();
-
         // Register with Device
 
         this.device.registerActor(this);
@@ -68,7 +66,7 @@ function TestActor() {
 
         this.operationalState.status = 'OK';
 
-        setInterval(function() {
+        setInterval(() => {
             if (this.operationalState.status === 'OK') {
                 this.operationalState = {status: "ERROR", message: "Network connection lost"};
             } else if (this.operationalState.status === 'ERROR') {
@@ -78,11 +76,9 @@ function TestActor() {
             }
 
             this.publishOperationalStateChange();
-        }.bind(this), this.configuration && this.configuration.operationalStateInterval ? this.configuration.operationalStateInterval : 30 * 1000);
+        }, this.configuration && this.configuration.operationalStateInterval ? this.configuration.operationalStateInterval : 30 * 1000);
 
-        deferred.resolve();
-
-        return deferred.promise;
+        return q.resolve();
     };
 
     /**

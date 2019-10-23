@@ -44,7 +44,7 @@ var singleton = {
 
 module.exports = singleton;
 
-var q = require('q');
+const q = require('q');
 var _ = require('lodash');
 
 function TestDevice() {
@@ -54,13 +54,9 @@ function TestDevice() {
     };
 
     TestDevice.prototype.start = function () {
-        var deferred = q.defer();
-
         singleton.devices.push(this);
 
-        deferred.resolve();
-
-        return deferred.promise;
+        return q.resolve();
     };
 
     TestDevice.prototype.registerActor = function (actor) {
@@ -82,5 +78,6 @@ function TestDevice() {
     };
 
     TestDevice.prototype.stop = function () {
+        return q.resolve();
     };
 }
