@@ -39,6 +39,12 @@ module.exports = {
             type: {
                 id: 'integer'
             }
+        }, {
+            id: "entitlementPath",
+            label: "Entitlement Path",
+            type: {
+                id: "string"
+            }
         }]
     },
     create: function () {
@@ -139,5 +145,12 @@ function TestActor() {
      */
     TestActor.prototype.generateEvent = function () {
         this.publishEvent("manualGeneratedEvent");
+    }
+
+    /**
+     *
+     */
+    TestActor.prototype.getState = function () {
+        return this.state;
     }
 }

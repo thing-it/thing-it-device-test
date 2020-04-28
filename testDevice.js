@@ -8,12 +8,30 @@ var singleton = {
         plugin: "testDevice",
         label: "Test Device",
         tangible: false,
+        interfaces: ['AccessManager'],
+        accessManagerPathsLookup: ['rolePath1', 'rolePath2'],
         connectionTypes: [],
         dataTypes: {},
         actorTypes: [],
         sensorTypes: [],
         services: [],
-        configuration: []
+        configuration: [
+            {
+                label: 'User Role Path 1',
+                id: 'rolePath1',
+                type: {
+                    id: 'string'
+                },
+                defaultValue: ''
+            }, {
+                label: 'User Role Path 2',
+                id: 'rolePath2',
+                type: {
+                    id: 'string'
+                },
+                defaultValue: ''
+            }
+        ]
     },
     create: function (device) {
         return new TestDevice();
@@ -45,7 +63,10 @@ var singleton = {
 module.exports = singleton;
 
 const q = require('q');
-var _ = require('lodash');
+const _ = require('lodash');
+const Queue = require('promise-queue');
+
+const queue = new Queue(1, Infinity);
 
 function TestDevice() {
     TestDevice.prototype.initialize = function (module) {
@@ -79,5 +100,84 @@ function TestDevice() {
 
     TestDevice.prototype.stop = function () {
         return q.resolve();
+    };
+
+    TestDevice.prototype.updateEntitlements = function (params) {
+
+        return new Promise((resolve, reject) => {
+
+                queue.add(async () => {
+
+                try {
+
+                    await this.updateEntitlementsSync(params);
+        this.logInfo(`Update Entitlements Done`);
+        resolve();
+
+    } catch (error) {
+
+            this.logError(`Update Entitlements Failed: ${error}`);
+            reject();
+
+        }
+
+    })
+        .catch((error) => {
+            this.logError(error);
+    });
+
+    });
+
+    }
+
+    TestDevice.prototype.updateEntitlementsSync = async function (params) {
+
+        const user = params.user;
+
+        const change = params.changes.length ? params.changes[0] : null;
+
+        this.logInfo(`Update entitlement invoked for ${JSON.stringify(user)} with changes ${JSON.stringify(change)}.`);
+
+        return;
+    };
+
+    TestDevice.prototype.reconcileEntitlements = function (params) {
+
+        return new Promise((resolve, reject) => {
+
+                queue.add(async () => {
+
+                try {
+
+                    await this.reconcileEntitlementsSync(params);
+        this.logInfo(`Reconcile Entitlements Done`);
+        resolve();
+
+    } catch (error) {
+
+            this.logError(`Reconcile Entitlements Failed: ${error}`);
+            reject();
+
+        }
+
+    })
+        .catch((error) => {
+            this.logError(error);
+    });
+
+    });
+
+    };
+
+    TestDevice.prototype.reconcileEntitlementsSync = async function (params) {
+
+        const user = params.user;
+
+        const changes = params.changes;
+
+        this.logInfo(`Reconcile entitlements invoked for ${JSON.stringify(user)} with changes ${JSON.stringify(changes)}.`);
+
+        return;
+
     };
 }

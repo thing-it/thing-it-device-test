@@ -1,6 +1,6 @@
 {
   "name": "@thing-it/device-test",
-  "version": "0.1.3",
+  "version": "0.1.4-beta.2",
   "description": "[thing-it-node] Device Plugin for testing.",
   "authors": "Marc Gille",
   "license": "MIT, EPL",
@@ -16,6 +16,7 @@
   "dependencies": {
     "cron": "^1.7.1",
     "lodash": "^4.17.4",
+    "promise-queue": "^2.2.5",
     "q": "^1.5.0",
     "require-from-string": "^2.0.2"
   },
