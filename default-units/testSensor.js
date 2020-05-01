@@ -26,6 +26,24 @@ module.exports = {
             type: {
                 id: 'integer'
             }
+        }, {
+            id: 'throttlingMinInterval',
+            label: 'Min Interval (ms)',
+            type: {
+                id: 'integer'
+            }
+        }, {
+            id: 'throttlingMaxAge',
+            label: 'Max Age (ms)',
+            type: {
+                id: 'integer'
+            }
+        }, {
+            id: 'throttlingMaxRejected',
+            label: 'Max Rejected',
+            type: {
+                id: 'integer'
+            }
         }]
     },
     create: function () {
