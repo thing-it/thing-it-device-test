@@ -14,7 +14,13 @@ var singleton = {
         dataTypes: {},
         actorTypes: [],
         sensorTypes: [],
-        services: [],
+        services: [{
+            id: "occupy",
+            label: "Occupy"
+        },  {
+            id: "release",
+            label: "Release"
+        }],
         configuration: [
             {
                 label: 'User Role Path 1',
@@ -94,6 +100,34 @@ function TestDevice() {
 
     TestDevice.prototype.setState = function (state) {
         this.state = state;
+
+        this.publishStateChange();
+    };
+
+    TestDevice.prototype.occupy = function (params) {
+
+        var user = params.__header && params.__header.userDetails ? params.__header.userDetails : params.loggedInUser;
+
+        delete user.entitlements;
+
+        this.logInfo(`occupy ${JSON.stringify(user)}`);
+
+        this.state.lastUser =  this.state.user;
+        this.state.user = user;
+
+        this.publishStateChange();
+    };
+
+    TestDevice.prototype.release = function (params) {
+
+        var user = params.__header && params.__header.userDetails ? params.__header.userDetails : params.loggedInUser;
+
+        delete user.entitlements;
+
+        this.logInfo(`release ${JSON.stringify(user)}`);
+
+        this.state.lastUser =  user;
+        this.state.user = null;
 
         this.publishStateChange();
     };

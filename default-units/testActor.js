@@ -122,6 +122,8 @@ function TestActor() {
 
         delete user.entitlements;
 
+        this.logInfo(`occupy ${JSON.stringify(user)}`);
+
         this.state.lastUser =  this.state.user;
         this.state.user = user;
 
@@ -134,10 +136,10 @@ function TestActor() {
 
         delete user.entitlements;
 
-        if (String(this.state.user._id) === String(user._id)) {
-            this.state.lastUser =  this.state.user;
-            this.state.user = null;
-        }
+        this.logInfo(`release ${JSON.stringify(user)}`);
+
+        this.state.lastUser =  user;
+        this.state.user = null;
 
         this.publishStateChange();
     };

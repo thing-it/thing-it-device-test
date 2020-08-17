@@ -13,6 +13,12 @@ module.exports = {
         services: [{
             id: "generateEvent",
             label: "Generate Event"
+        },  {
+            id: "occupy",
+            label: "Occupy"
+        },  {
+            id: "release",
+            label: "Release"
         }],
         configuration: [{
             id: 'submitRate',
@@ -100,4 +106,32 @@ function TestSensor() {
     TestSensor.prototype.getState = function () {
         return this.state;
     }
+
+    TestSensor.prototype.occupy = function (params) {
+
+        var user = params.__header && params.__header.userDetails ? params.__header.userDetails : params.loggedInUser;
+
+        delete user.entitlements;
+
+        this.logInfo(`occupy ${JSON.stringify(user)}`);
+
+        this.state.lastUser =  this.state.user;
+        this.state.user = user;
+
+        this.publishStateChange();
+    };
+
+    TestSensor.prototype.release = function (params) {
+
+        var user = params.__header && params.__header.userDetails ? params.__header.userDetails : params.loggedInUser;
+
+        delete user.entitlements;
+
+        this.logInfo(`release ${JSON.stringify(user)}`);
+
+        this.state.lastUser =  user;
+        this.state.user = null;
+
+        this.publishStateChange();
+    };
 };
