@@ -72,6 +72,8 @@ function TestSensor() {
 
         this.device.registerSensor(this);
 
+        this.state = {};
+
         setInterval(() => {
             this.publishStateChange({temperature: 15 + Math.ceil(Math.random() * 10)});
 
