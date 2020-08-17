@@ -8,7 +8,7 @@ var singleton = {
         plugin: "testDevice",
         label: "Test Device",
         tangible: false,
-        interfaces: ['AccessManager'],
+        interfaces: ['AccessManager', 'Occupiable'],
         accessManagerPathsLookup: ['rolePath1', 'rolePath2'],
         connectionTypes: [],
         dataTypes: {},

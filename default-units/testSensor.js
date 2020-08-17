@@ -5,6 +5,7 @@ module.exports = {
         role: "sensor",
         family: "testSensor",
         deviceTypes: ["test/testDevice"],
+        interfaces: ['Occupiable'],
         tangible: false,
         events: [{
             id: "manualGeneratedEvent",
