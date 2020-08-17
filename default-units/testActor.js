@@ -5,6 +5,7 @@ module.exports = {
         role: "actor",
         family: "testActor",
         deviceTypes: ["test/testDevice"],
+        interfaces: ['Occupiable'],
         tangible: false,
         events: [{
             id: "manualGeneratedEvent",
@@ -25,6 +26,12 @@ module.exports = {
         }, {
             id: "generateEvent",
             label: "Generate Event"
+        },  {
+            id: "occupy",
+            label: "Occupy"
+        },  {
+            id: "release",
+            label: "Release"
         }],
         state: [{
             id: "light",
@@ -106,9 +113,35 @@ function TestActor() {
      */
     TestActor.prototype.on = function () {
         this.state.light = "on";
+        this.publishStateChange();
+    };
+
+    TestActor.prototype.occupy = function (params) {
+
+        var user = params.__header && params.__header.userDetails ? params.__header.userDetails : params.loggedInUser;
+
+        delete user.entitlements;
+
+        this.state.lastUser =  this.state.user;
+        this.state.user = user;
 
         this.publishStateChange();
     };
+
+    TestActor.prototype.release = function (params) {
+
+        var user = params.__header && params.__header.userDetails ? params.__header.userDetails : params.loggedInUser;
+
+        delete user.entitlements;
+
+        if (String(this.state.user._id) === String(user._id)) {
+            this.state.lastUser =  this.state.user;
+            this.state.user = null;
+        }
+
+        this.publishStateChange();
+    };
+
 
     /**
      *
