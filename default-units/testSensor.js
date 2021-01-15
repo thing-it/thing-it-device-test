@@ -34,6 +34,13 @@ module.exports = {
                 id: 'integer'
             }
         }, {
+            id: "secureToken",
+            label: "Secure Token",
+            type: {
+                id: "string",
+                encrypted: true
+            }
+        }, {
             id: 'throttlingMinInterval',
             label: 'Min Interval (ms)',
             type: {

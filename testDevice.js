@@ -36,6 +36,13 @@ var singleton = {
                     id: 'string'
                 },
                 defaultValue: ''
+            }, {
+                id: "secureToken",
+                label: "Secure Token",
+                type: {
+                    id: "string",
+                    encrypted: true
+                }
             }
         ]
     },

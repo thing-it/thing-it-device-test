@@ -52,6 +52,13 @@ module.exports = {
             type: {
                 id: "string"
             }
+        }, {
+            id: "secureToken",
+            label: "Secure Token",
+            type: {
+                id: "string",
+                encrypted: true
+            }
         }]
     },
     create: function () {
